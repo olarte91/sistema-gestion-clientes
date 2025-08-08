@@ -1,0 +1,48 @@
+@startuml Diagrama de clases
+
+class User{
+    - int userId
+    - String userName
+    - String password
+}
+
+interface UserService{
+    +User create(String userName, String password)
+    +User update(User user)
+    +delete(int userId)
+    +List<User> getUsers()
+}
+
+class AdminUser{
+    +User createUser(User user)
+    +User updateUser(User users)
+    +void deleteUser(int idUser)
+    +List<User> getAllUsers()
+}
+
+class StandardUser{
+
+}
+
+class UserServiceImpl{
+
+}
+
+class UserController{
+
+}
+
+class UserRegister{
+
+}
+
+class MainView{
+
+}
+
+User <|-- AdminUser
+User <|-- StandardUser
+UserService <|.. UserServiceImpl
+UserService <.. UserController
+
+@enduml
