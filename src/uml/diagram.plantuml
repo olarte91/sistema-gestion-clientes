@@ -6,7 +6,7 @@ class User{
     - String password
 }
 
-interface UserService{
+interface UserRegister{
     +User create(String userName, String password)
     +User update(User user)
     +delete(int userId)
@@ -21,18 +21,15 @@ class AdminUser{
 }
 
 class StandardUser{
-
-}
-
-class UserServiceImpl{
-
+    +StandardUser view()
+    +StandardUser update()
 }
 
 class UserController{
 
 }
 
-class UserRegister{
+class UserRegisterImpl{
 
 }
 
@@ -40,9 +37,21 @@ class MainView{
 
 }
 
+class UserLog{
+    -String action
+    -LocalDateTime timestamp
+}
+
+
+
 User <|-- AdminUser
 User <|-- StandardUser
-UserService <|.. UserServiceImpl
 UserService <.. UserController
+UserRegister <|.. UserRegisterImpl
+UserRegisterImpl o-- User
+UserController <.. MainView
+UserRegister <.. UserService
+UserRegister <.. AdminUser
+User o-- UserLog  
 
 @enduml

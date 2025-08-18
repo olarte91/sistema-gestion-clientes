@@ -1,79 +1,44 @@
 package view;
 
-import java.util.List;
 import java.util.Scanner;
 
+import controller.UserController;
 import model.User;
+import model.UserLog;
 
 public class MainView {
 
-    private Scanner scanner;
+    private UserController userController;
+    private Scanner scanner = new Scanner(System.in);
 
-    public MainView (){
-        this.scanner = new Scanner(System.in);
+    public MainView(UserController userController){
+        this.userController = userController;
     }
 
     public void login(){
-        System.out.println("== SISTEMA DE REGISTRO DE USUARIOS ==");
-        System.out.println("1. Ingresar");
-        System.out.println("2. Registrar nuevo usuario");
-    }
-    public void adminMainMenu(){
-        System.out.println("<=== Bienvenido al sistema de registro de usuarios ===>");
-        System.out.println("Seleccione una opción:");
-        System.out.println("1. Registrar nuevo usuario.");
-        System.out.println("2. Mostrar lista de usuarios registrados.");
-        System.out.println("3. Buscar un usuario específico.");
-        System.out.println("4. Actualizar la información de un usuario.");
-        System.out.println("5. Eliminar un usuario.");
-        System.out.println("6. Salir.");
-
-    }
-
-    public String[] getNewUserData(){
-        System.out.println("<=== Registrar nuevo usuario ===>");
-
-        System.out.println("Ingrese el nombre completo del usuario: ");
-        String fullName = scanner.nextLine();
-
         System.out.println("Ingrese el nombre de usuario: ");
-        String userName = scanner.nextLine();
-
-        System.out.println("Ingrese la contraseña del usuario: ");
+        String username = scanner.nextLine();
+        System.out.println("Ingrese la constraseña: ");
         String password = scanner.nextLine();
 
-        System.out.println("Ingrese el rol del usuario (ADMIN o STANDARD): ");
-        String role = scanner.nextLine();
+        User user = new User(username, password);
 
-        return new String[] {fullName, userName, password, role};
+        User loggedUser = userController.login(user);
 
-    }
-
-    public String[] getLoginUserData(){
-        System.out.println("Ingrese el nombre de usuario: ");
-        String userName = scanner.nextLine();
-
-        System.out.println("Ingrese la contraseña:");
-        String password = scanner.nextLine();
-
-        return new String[] {userName, password};
-
-    }
-
-    public void showUsers(List<User> users){
-        System.out.println("Lista de usuarios");
-
-        for(User user : users){
-            System.out.println(user.toString());
+        if(loggedUser != null){
+            System.out.println("Bienvenido! " + user.getUserName());
+        }else{
+            System.out.println("El usuario " + user.getUserName() + " no está registrado en el sistema");
+            login();
         }
-
     }
 
-    public String getUserInput(){
-        return scanner.nextLine();
-    }
+    public void showUserLogs(User user){
 
-    public void errorLogin(){
-        System.out.println("Error de login");
+        System.out.println("Usuario: " + user.getUserName() + "\n");
+
+        for(UserLog log: user.getUserLogs()){
+            System.out.println("Acción: " + log.getAction() + "\n" + "Timestamp: " + log.getTimestamp());
+        }
     }
 }

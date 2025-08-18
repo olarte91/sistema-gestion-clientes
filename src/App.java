@@ -1,14 +1,20 @@
 import controller.UserController;
+import model.UserRegister;
+import model.UserReigsterImpl;
 import service.UserService;
 import view.MainView;
 
 public class App {
     public static void main(String[] args) throws Exception {
 
-        MainView mainView = new MainView();
-        UserService userService = new UserService();
-        UserController userController = new UserController(mainView, userService);
+        UserRegister register = new UserReigsterImpl();
 
-        userController.start();
+        UserService service = new UserService(register);
+
+        UserController controller = new UserController(service);
+
+        MainView mainView = new MainView(controller);
+
+        mainView.login();
     }
 }

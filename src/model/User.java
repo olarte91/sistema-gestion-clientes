@@ -1,41 +1,51 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
 
-    private static Integer contador = 1;
-    private Integer id;
+    private static Integer userId = 0;
     private String userName;
-    private String fullName;
     private String password;
-    private List<UserAction> userAction;
+    private List<UserLog> userLogs = new ArrayList<>();
 
-    public User(String userName, String fullName, String password) {
-        this.id = contador;
+    public User(String userName, String password){
+        userId ++;
         this.userName = userName;
-        this.fullName = fullName;
         this.password = password;
-        contador ++;
     }
 
-    public void addUserAction(UserAction userAction){
-        this.userAction.add(userAction);
+    public User(){
+
     }
 
-    @Override
-    public String toString(){
-        return "Id user: " + id + "\n" +
-        "user name: " + userName + "\n" +
-        "full name: " + fullName;
+    public Integer getId(){
+        return userId;
     }
 
     public String getUserName(){
-        return this.userName;
+        return userName;
     }
 
     public String getPassword(){
-        return this.password;
+        return password;
+    }
+
+    public List<UserLog> getUserLogs(){
+        return userLogs;
+    }
+
+    public void setUserName(String userName){
+        this.userName = userName;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
+
+    public void setUserLog(UserLog userLog){
+        userLogs.add(userLog);
     }
 
 }
