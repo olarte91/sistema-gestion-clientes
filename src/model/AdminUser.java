@@ -1,30 +1,25 @@
 package model;
 
-import java.util.List;
-
 public class AdminUser extends User{
 
-    UserRegister userRegister;
-
-    public AdminUser(String userName, String password, UserRegister userRegister){
-        super(userName, password);
-        this.userRegister = userRegister;
+    public AdminUser( String username, String name, String password){
+        super(username, name, password);
     }
 
-    public User createUser(User user){
-        return userRegister.create(user);
+    public AdminUser(){}
+
+    @Override
+    public boolean canCreateUser(){
+        return true;
     }
 
-    public User updateUser(Integer userId, User user){
-        return userRegister.update(userId, user);
+    @Override
+    public boolean canEditUser(){
+        return true;
     }
 
-    public boolean deleteUser(User user){
-        return userRegister.delete(user);
+    @Override
+    public boolean canDeleteUser(){
+        return true;
     }
-
-    public List<User> getAllUsers(){
-        return userRegister.getUsers();
-    }
-
 }

@@ -1,10 +1,10 @@
 package view;
 
+import java.util.List;
 import java.util.Scanner;
 
 import controller.UserController;
 import model.User;
-import model.UserLog;
 
 public class MainView {
 
@@ -15,52 +15,28 @@ public class MainView {
         this.userController = userController;
     }
 
-    public void login(){
-        System.out.println("Ingrese el nombre de usuario: ");
-        String username = scanner.nextLine();
-        System.out.println("Ingrese la constraseña: ");
-        String password = scanner.nextLine();
+    public void createUser(){
+        User user = new User();
+        System.out.println("Ingrese el nombre del username: ");
+        user.setUserName(scanner.nextLine());
 
-        User user = new User(username, password);
+        System.out.println("Ingrese el nombre completo del usuario: ");
+        user.setName(scanner.nextLine());
 
-        String userType = userController.login(user);
+        System.out.println("Ingrese la contraseña de usuario: ");
+        user.setPassword(scanner.nextLine());
 
-        if(userType == "admin"){
-            System.out.println("Bienvenido, Administrador");
-            adminView();
-        }else if (userType == "standard"){
-            System.out.println("Bienvenido Usuario");
-            standardView();
-        }else{
-            System.out.println("Nombre de usuario o contraseña incorrectos.");
-            login();
+        userController.createUser(user);
+    }
+
+    public void usersList(){
+        List<User> listaUsuarios = userController.usersList();
+
+        for(User usuario: listaUsuarios){
+            System.out.println("Id: " + usuario.getId());
+            System.out.println("Username: " + usuario.getName());
+            System.out.println("Nombre: " + usuario.getName());
         }
     }
 
-    private void standardView() {
-        System.out.println("Bienvenido usuario");
-    }
-
-    public void showUserLogs(User user){
-
-        System.out.println("Usuario: " + user.getUserName() + "\n");
-
-        for(UserLog log: user.getUserLogs()){
-            System.out.println("Acción: " + log.getAction() + "\n" + "Timestamp: " + log.getTimestamp());
-        }
-    }
-
-    public Integer adminView(){
-
-        System.out.println("Panel principal usuario *Administrador*");
-        System.out.println("1.Crear usuario nuevo");
-        System.out.println("2.Actualizar usuario existente");
-        System.out.println("3.Eliminar usuario");
-        System.out.println("4.Mostrar lista de usuarios");
-        System.out.println("5.Cerrar sesión");
-
-        Integer userOption = scanner.nextInt();
-
-        return userOption;
-    }
 }

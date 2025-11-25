@@ -2,19 +2,13 @@ package model;
 
 public class StandardUser extends User{
 
-    public StandardUser(String userName, String password){
-        super(userName, password);
+    public StandardUser(String username, String name, String password){
+        super(username, name, password);
     }
 
-    public User view(){
-        return this;
-    }
-
-    public User update(User user){
-        this.setUserName(user.getUserName());
-        this.setPassword(user.getPassword());
-
-        return this;
+    @Override
+    public boolean canEditUser(){
+        return true;
     }
 
 }

@@ -6,26 +6,33 @@ import java.util.List;
 public class User {
 
     private static Integer userId = 0;
-    private String userName;
+    private Integer id;
+    private String name;
+    private String username;
     private String password;
     private List<UserLog> userLogs = new ArrayList<>();
 
-    public User(String userName, String password){
-        userId ++;
-        this.userName = userName;
+    public User(String username, String name, String password){
+        this.id = userId ++;
+        this.name = name;
+        this.username = username;
         this.password = password;
     }
 
     public User(){
-
+        this.id = userId ++;
     }
 
     public Integer getId(){
-        return userId;
+        return id;
     }
 
     public String getUserName(){
-        return userName;
+        return username;
+    }
+
+    public String getName(){
+        return name;
     }
 
     public String getPassword(){
@@ -37,15 +44,33 @@ public class User {
     }
 
     public void setUserName(String userName){
-        this.userName = userName;
+        this.username = userName;
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 
     public void setPassword(String password){
         this.password = password;
     }
 
-    public void setUserLog(UserLog userLog){
+    public void addUserLog(UserLog userLog){
         userLogs.add(userLog);
+    }
+
+    //Permisos de usuario
+
+    public boolean canCreateUser(){
+        return false;
+    }
+
+    public boolean canEditUser(){
+        return false;
+    }
+
+    public boolean canDeleteUser(){
+        return false;
     }
 
 }

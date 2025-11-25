@@ -2,49 +2,56 @@ package service;
 
 import java.util.List;
 
-import model.AdminUser;
-import model.StandardUser;
 import model.User;
 import model.UserLog;
+import model.UserOperations;
 import model.UserRegister;
 
-public class UserService {
+public class UserService implements UserOperations{
 
-    private UserRegister userRegister;
+    private final UserRegister userRegister;
+    private User currentUser = null;
 
-    public UserService (UserRegister userRegister){
+    public UserService(User user, UserRegister userRegister){
         this.userRegister = userRegister;
+        this.currentUser = user;
     }
 
-    public void createUser(User user){
-
-        if(user instanceof AdminUser){
-            userRegister.create(new AdminUser(user.getUserName(), user.getPassword(), userRegister));
-        }else if (user instanceof StandardUser){
-            userRegister.create(new StandardUser(user.getUserName(), user.getPassword()));
+    @Override
+    public User create(User user) {
+        if(!currentUser.canCreateUser()){
+            return null;
         }
-        
+
+        userRegister.create(user);
+
+        currentUser.addUserLog(new UserLog("Se ha guardado el usuario: " + user.getUserName()));
+
+        return user;
     }
 
-    public User login(User user){
-        for(User userInList:userRegister.getUsers()){
-            if(verifyUserExist(user.getUserName(), user.getPassword(), userInList)){
-                UserLog userLog = new UserLog("Usuario inicia sesión");
-                userInList.setUserLog(userLog);
-                return userInList;
-            }
-        }
-        return null;
+    @Override
+    public User findById(int id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findById'");
     }
 
-    private boolean verifyUserExist(String username, String password, User user){
-        if(user.getUserName().equals(username) && user.getPassword().equals(password)){
-            return true;
-        }
-        return false;
+    @Override
+    public User update(Integer id, User user) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
-    public List<UserLog> getUserLogs(User user){
-        return user.getUserLogs();
+    @Override
+    public boolean delete(User user) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
+
+    @Override
+    public List<User> getUsers() {
+        return userRegister.users();
+    }
+
+  
 }

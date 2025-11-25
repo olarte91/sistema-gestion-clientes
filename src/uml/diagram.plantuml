@@ -11,31 +11,28 @@ class User{
 }
 
 interface UserOperations{
-    +User create(String userName, String password)
-    +User findById(String id)
+    +User create(User user)
+    +User findById(int id)
     +User update(User user)
     +Void delete(int userId)
     +List<User> getUsers()
 }
 
-class AdminUser{
-    
+class AdminUser{}   
+
+class StandardUser{}
+
+class UserService{
+    -User currentUser
 }
 
-class StandardUser{
-}
-
-class UserController{
-
-}
+class UserController{}
 
 class UserRegister{
     User[] users
 }
 
-class MainView{
-
-}
+class MainView{}
 
 class UserLog{
     -String action
