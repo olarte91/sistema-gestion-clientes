@@ -2,6 +2,8 @@ package service;
 
 import java.util.List;
 
+import model.AdminUser;
+import model.StandardUser;
 import model.User;
 import model.UserLog;
 import model.UserRegister;
@@ -12,6 +14,16 @@ public class UserService {
 
     public UserService (UserRegister userRegister){
         this.userRegister = userRegister;
+    }
+
+    public void createUser(User user){
+
+        if(user instanceof AdminUser){
+            userRegister.create(new AdminUser(user.getUserName(), user.getPassword(), userRegister));
+        }else if (user instanceof StandardUser){
+            userRegister.create(new StandardUser(user.getUserName(), user.getPassword()));
+        }
+        
     }
 
     public User login(User user){

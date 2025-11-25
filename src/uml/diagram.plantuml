@@ -2,35 +2,35 @@
 
 class User{
     - int userId
+    - String name
     - String userName
     - String password
+    + boolean canCreateUser()
+    + boolean canEditUser()
+    + boolean canDeleteUser()
 }
 
-interface UserRegister{
+interface UserOperations{
     +User create(String userName, String password)
+    +User findById(String id)
     +User update(User user)
-    +delete(int userId)
+    +Void delete(int userId)
     +List<User> getUsers()
 }
 
 class AdminUser{
-    +User createUser(User user)
-    +User updateUser(User users)
-    +void deleteUser(int idUser)
-    +List<User> getAllUsers()
+    
 }
 
 class StandardUser{
-    +StandardUser view()
-    +StandardUser update()
 }
 
 class UserController{
 
 }
 
-class UserRegisterImpl{
-
+class UserRegister{
+    User[] users
 }
 
 class MainView{
@@ -47,11 +47,10 @@ class UserLog{
 User <|-- AdminUser
 User <|-- StandardUser
 UserService <.. UserController
-UserRegister <|.. UserRegisterImpl
-UserRegisterImpl o-- User
 UserController <.. MainView
 UserRegister <.. UserService
-UserRegister <.. AdminUser
-User o-- UserLog  
+User "1" *-- "*" UserLog  
+UserOperations <|.. UserService
+UserRegister "1" o-- "*" User
 
 @enduml

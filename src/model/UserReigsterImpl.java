@@ -5,7 +5,7 @@ import java.util.List;
 public class UserReigsterImpl implements UserRegister{
 
     List<User> users = List.of(
-        new User("miguel", "123")
+        new AdminUser("admin", "admin", this)
     );
 
     @Override
