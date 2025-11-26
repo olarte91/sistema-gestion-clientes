@@ -1,7 +1,6 @@
 package service;
 
 import java.util.List;
-
 import model.User;
 import model.UserLog;
 import model.UserOperations;
@@ -12,9 +11,8 @@ public class UserService implements UserOperations{
     private final UserRegister userRegister;
     private User currentUser = null;
 
-    public UserService(User user, UserRegister userRegister){
+    public UserService(UserRegister userRegister){
         this.userRegister = userRegister;
-        this.currentUser = user;
     }
 
     @Override
@@ -51,6 +49,21 @@ public class UserService implements UserOperations{
     @Override
     public List<User> getUsers() {
         return userRegister.users();
+    }
+
+    public User loginUser(User user){
+
+        for(User userLogin: userRegister.users()){
+            if(userLogin.getUserName().equals(user.getUserName()) 
+                && userLogin.getPassword().equals(user.getPassword())){
+
+                    currentUser = userLogin;
+
+            }
+        }
+
+        return currentUser;
+       
     }
 
   

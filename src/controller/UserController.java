@@ -23,4 +23,8 @@ public class UserController {
         return userService.getUsers();
     }
 
+    public User loginUser(User user){
+        return userService.loginUser(user);
+    }
+
 }

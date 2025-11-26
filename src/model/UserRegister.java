@@ -7,6 +7,10 @@ public class UserRegister {
 
     private List<User> users = new ArrayList<>();
 
+    public UserRegister(User user){
+        users.add(user);
+    }
+
     public List<User> users(){
         return users;
     }

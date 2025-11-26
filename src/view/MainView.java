@@ -39,4 +39,43 @@ public class MainView {
         }
     }
 
+    public void login(){
+        User user = new User();
+        System.out.println("Usuario: ");
+        String username = scanner.nextLine();
+        user.setUserName(username);
+        System.out.println("Contraseña: ");
+        String password = scanner.nextLine();
+        user.setPassword(password);
+
+        User usuarioLogin = userController.loginUser(user);
+
+        if(usuarioLogin != null){
+            if (!usuarioLogin.canCreateUser()) {
+                standardMenu();
+            }else{
+                adminMenu();
+            }
+        }else{
+            nonRegistered();
+        }
+
+    }
+
+    public void adminMenu(){
+        System.out.println("-MENÚ ADMINISTRADOR-");
+        System.out.println("1. Crear usuario.");
+        System.out.println("2. Editar usuario.");
+        System.out.println("3. Eliminar usuario.");
+        System.out.println("4. Mostrar lista de usuarios.");
+    }
+
+    public void standardMenu(){
+        System.out.println("-MENÚ USUARIO STANDAR-");
+    }
+
+    public void nonRegistered(){
+        System.out.println("No eres usuario registrado");
+    }
+
 }
