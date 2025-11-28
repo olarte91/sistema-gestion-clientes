@@ -10,6 +10,7 @@ public class User {
     private String name;
     private String username;
     private String password;
+    private Boolean isAccountBlocked = false;
     private List<UserLog> userLogs = new ArrayList<>();
 
     public User(String username, String name, String password){
@@ -71,6 +72,14 @@ public class User {
 
     public boolean canDeleteUser(){
         return false;
+    }
+
+    public boolean isAccountBlocked(){
+        return isAccountBlocked;
+    }
+
+    public void blockAccount(){
+        isAccountBlocked = true;
     }
 
 }

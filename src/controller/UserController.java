@@ -19,12 +19,35 @@ public class UserController {
         return user;
     }
 
-    public List<User> usersList(){
+    public User[] usersList(){
         return userService.getUsers();
     }
 
     public User loginUser(User user){
         return userService.loginUser(user);
+    }
+
+    public void logoutUser(){
+        userService.logoutUser();
+    }
+
+    public int[] getErrorCodeAndAttemps(){
+        int[] codeAttpems = new int[2];
+        codeAttpems[0] = userService.errorAttemp;
+        codeAttpems[1] = userService.errorCode;
+        return codeAttpems;
+    }
+
+    public void addUserLog(String message){
+        userService.addUserLog(message);
+    }
+
+    public String currentUserName(){
+        return userService.currentUser().getUserName();
+    }
+
+    public String currentUserData(){
+        return userService.currentUserData();
     }
 
 }

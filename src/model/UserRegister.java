@@ -1,22 +1,22 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class UserRegister {
 
-    private List<User> users = new ArrayList<>();
+    private User[] users = new User[50];
+    private int slotCount = 0;
 
     public UserRegister(User user){
-        users.add(user);
+
+        users[0] = user;
+        slotCount += 1;;
     }
 
-    public List<User> users(){
+    public User[] users(){
         return users;
     }
 
     public User create(User user){
-        users.add(user);
+        users[slotCount] = user;
 
         return user;
     }
@@ -43,13 +43,13 @@ public class UserRegister {
         return updateUser;
     }
 
-    public void delete(User user){
-        User deleteUser = findById(user.getId());
+    // public void delete(User user){
+    //     User deleteUser = findById(user.getId());
 
-        if(deleteUser != null){
-            users.remove(deleteUser);
-        }
-    }
+    //     if(deleteUser != null){
+    //         users.remove(deleteUser);
+    //     }
+    // }
 
 
 
