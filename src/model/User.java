@@ -1,17 +1,15 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class User {
 
-    private static Integer userId = 0;
+    private static Integer userId = 1;
     private Integer id;
     private String name;
     private String username;
     private String password;
     private Boolean isAccountBlocked = false;
-    private List<UserLog> userLogs = new ArrayList<>();
+    private UserLog[] userLogs = new UserLog[100];
+    private int logCounter = 0;
 
     public User(String username, String name, String password){
         this.id = userId ++;
@@ -40,7 +38,7 @@ public class User {
         return password;
     }
 
-    public List<UserLog> getUserLogs(){
+    public UserLog[] getUserLogs(){
         return userLogs;
     }
 
@@ -57,7 +55,10 @@ public class User {
     }
 
     public void addUserLog(UserLog userLog){
-        userLogs.add(userLog);
+        
+        userLogs[logCounter] = userLog;
+
+        logCounter += 1;
     }
 
     //Permisos de usuario

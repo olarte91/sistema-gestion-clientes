@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import controller.UserController;
 import model.User;
+import model.UserLog;
 
 public class MainView {
 
@@ -41,11 +42,11 @@ public class MainView {
         if(usuarioLogin != null){
             if (!usuarioLogin.canCreateUser() && userController.getErrorCodeAndAttemps()[1] == 0
         && !usuarioLogin.isAccountBlocked()) {
-                userController.addUserLog("Usuario: " + userController.currentUserName() + "Ha iniciado sesión");
+                userController.addUserLog("usuario " + userController.currentUserName() + " ha iniciado sesión");
                 standardMenu();
             }else if(usuarioLogin.canCreateUser() && userController.getErrorCodeAndAttemps()[1] == 0
         && !usuarioLogin.isAccountBlocked()){
-                userController.addUserLog("Usuario: " + userController.currentUserName() + "Ha iniciado sesión");
+                userController.addUserLog("usuario " + userController.currentUserName() + " ha iniciado sesión");
                 adminMenu();
             } else if (userController.getErrorCodeAndAttemps()[1] == 1
                     && userController.getErrorCodeAndAttemps()[0] <= 3
@@ -71,9 +72,10 @@ public class MainView {
         System.out.println("1. Crear usuario.");
         System.out.println("2. Editar usuario.");
         System.out.println("3. Eliminar usuario.");
-        System.out.println("4. Mostrar lista de usuarios.");
-        System.out.println("5. Mostrar logs de usuarios.");
-        System.out.println("6. Salir.");
+        System.out.println("4. Cambiar tipo de usuario.");
+        System.out.println("5. Mostrar lista de usuarios.");
+        System.out.println("6. Mostrar logs de usuarios.");
+        System.out.println("7. Salir.");
 
         System.out.println("Elija una opción: ");
         option = scanner.nextInt();
@@ -89,12 +91,15 @@ public class MainView {
                 deleteUserView();
                 break;
             case 4:
-                usersListView();
+                changeUserTypeView();
                 break;
             case 5:
-                usersLogsView();
+                usersListView();;
                 break;
             case 6:
+                usersLogsView();
+                break;
+            case 7:
                 break;
             default:
                 errorScreenView("Opción inválida!");
@@ -104,8 +109,21 @@ public class MainView {
     }
 
     private void usersLogsView() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'usersLogsView'");
+        System.out.println("-LOGS DE USUARIO-");
+        for(UserLog log: userController.getUserLogs()){
+            if(log != null){
+
+                System.out.println(log.getTimestamp()+ " " + log.getAction());
+            }
+        }
+
+        scanner.nextLine();
+
+        System.out.println("Presione una tecla para continuar...");
+
+        scanner.nextLine();
+
+        adminMenu();
     }
 
     private void editUserView() {
@@ -126,7 +144,7 @@ public class MainView {
 
         int option = 0;
 
-        System.out.println("-MENÚ USUARIO STANDAR-");
+        System.out.println("-MENÚ USUARIO STANDARD-");
         System.out.println("1. Ver datos de usuario.");
         System.out.println("2. Editar usuario.");
         System.out.println("3. Salir.");
@@ -142,7 +160,7 @@ public class MainView {
                 editUserView();
                 break;
             case 3:
-                userController.addUserLog("El usuario" + userController.currentUserName() + "Ha cerrado sesión");
+                userController.addUserLog("El usuario " + userController.currentUserName() + " Ha cerrado sesión");
                 userController.logoutUser();
                 login();
             default:
@@ -172,6 +190,10 @@ public class MainView {
         scanner.nextLine();
         scanner.nextLine();
         standardMenu();
+    }
+
+    public void changeUserTypeView(){
+        System.out.println("-CAMBIAR DE TIPO DE USUARIO-");
     }
 
 }

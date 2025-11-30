@@ -1,8 +1,7 @@
 package controller;
 
-import java.util.List;
-
 import model.User;
+import model.UserLog;
 import service.UserService;
 
 public class UserController {
@@ -40,6 +39,10 @@ public class UserController {
 
     public void addUserLog(String message){
         userService.addUserLog(message);
+    }
+
+    public UserLog[] getUserLogs(){
+        return userService.getUserLogs();
     }
 
     public String currentUserName(){

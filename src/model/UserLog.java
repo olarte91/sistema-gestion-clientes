@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class UserLog {
     private String action;
@@ -16,6 +17,7 @@ public class UserLog {
     }
 
     public String getTimestamp(){
-        return timestamp.toString();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return timestamp.format(formatter);
     }
 }

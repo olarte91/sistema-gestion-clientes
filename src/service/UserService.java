@@ -26,15 +26,14 @@ public class UserService implements UserOperations{
 
         userRegister.create(user);
 
-        currentUser.addUserLog(new UserLog("Se ha guardado el usuario: " + user.getUserName()));
+        currentUser.addUserLog(new UserLog("Se ha creado el usuario: " + user.getUserName()));
 
         return user;
     }
 
     @Override
     public User findById(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+        return userRegister.findById(id);
     }
 
     @Override
@@ -94,6 +93,10 @@ public class UserService implements UserOperations{
 
     public String currentUserData(){
         return "Name: " + currentUser.getName() + "\n" + "UserName: " + currentUser.getUserName();
+    }
+
+    public UserLog[] getUserLogs(){
+        return currentUser.getUserLogs();
     }
 
   
