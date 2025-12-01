@@ -72,6 +72,8 @@ public class UserService implements UserOperations{
                     return currentUser;
                 }
 
+            }else{
+                return currentUser;
             }
         }
 

@@ -1,32 +1,24 @@
 package view;
 
-import java.util.List;
 import java.util.Scanner;
 
-import controller.UserController;
 import model.User;
-import model.UserLog;
 
 public class MainView {
 
-    private UserController userController;
     private Scanner scanner = new Scanner(System.in);
 
-    public MainView(UserController userController){
-        this.userController = userController;
-    }
+    // public void usersListView(){
+    //     User[] listaUsuarios = userController.usersList();
 
-    public void usersListView(){
-        User[] listaUsuarios = userController.usersList();
+    //     for(User usuario: listaUsuarios){
+    //         System.out.println("Id: " + usuario.getId());
+    //         System.out.println("Username: " + usuario.getName());
+    //         System.out.println("Nombre: " + usuario.getName());
+    //     }
+    // }
 
-        for(User usuario: listaUsuarios){
-            System.out.println("Id: " + usuario.getId());
-            System.out.println("Username: " + usuario.getName());
-            System.out.println("Nombre: " + usuario.getName());
-        }
-    }
-
-    public void login(){
+    public User login(){
         User user = new User();
         System.out.println("SISTEMA DE GESTIÓN DE USUARIOS");
         System.out.println("-Inicio de sesión-");
@@ -37,94 +29,51 @@ public class MainView {
         String password = scanner.nextLine();
         user.setPassword(password);
 
-        User usuarioLogin = userController.loginUser(user);
+        return new User(username, password);
 
-        if(usuarioLogin != null){
-            if (!usuarioLogin.canCreateUser() && userController.getErrorCodeAndAttemps()[1] == 0
-        && !usuarioLogin.isAccountBlocked()) {
-                userController.addUserLog("usuario " + userController.currentUserName() + " ha iniciado sesión");
-                standardMenu();
-            }else if(usuarioLogin.canCreateUser() && userController.getErrorCodeAndAttemps()[1] == 0
-        && !usuarioLogin.isAccountBlocked()){
-                userController.addUserLog("usuario " + userController.currentUserName() + " ha iniciado sesión");
-                adminMenu();
-            } else if (userController.getErrorCodeAndAttemps()[1] == 1
-                    && userController.getErrorCodeAndAttemps()[0] <= 3
-                && !usuarioLogin.isAccountBlocked()) {
+    //     if(usuarioLogin != null){
+    //         if (!usuarioLogin.canCreateUser() && userController.getErrorCodeAndAttemps()[1] == 0
+    //     && !usuarioLogin.isAccountBlocked()) {
+    //             userController.addUserLog("usuario " + userController.currentUserName() + " ha iniciado sesión");
+    //             standardMenu();
+    //         }else if(usuarioLogin.canCreateUser() && userController.getErrorCodeAndAttemps()[1] == 0
+    //     && !usuarioLogin.isAccountBlocked()){
+    //             userController.addUserLog("usuario " + userController.currentUserName() + " ha iniciado sesión");
+    //             adminMenu();
+    //         } else if (userController.getErrorCodeAndAttemps()[1] == 1
+    //                 && userController.getErrorCodeAndAttemps()[0] <= 3
+    //             && !usuarioLogin.isAccountBlocked()) {
 
-                errorScreenView("Contraseña incorrecta, vuelva a intentarlo");
-                System.out.println("Intentos restantes: " + (3 - userController.getErrorCodeAndAttemps()[0]));
-                login();
-        } else {
-            blockedUserAccountView();
-            login();
-        }
-        nonRegistered();
-        login();
+    //             errorScreenView("Contraseña incorrecta, vuelva a intentarlo");
+    //             System.out.println("Intentos restantes: " + (3 - userController.getErrorCodeAndAttemps()[0]));
+    //             login();
+    //     } else {
+    //         blockedUserAccountView();
+    //         login();
+    //     }
+    //     nonRegistered();
+    //     login();
+    // }
+
     }
 
-    }
+    // private void usersLogsView() {
+    //     System.out.println("-LOGS DE USUARIO-");
+    //     for(UserLog log: userController.getUserLogs()){
+    //         if(log != null){
 
-    public void adminMenu(){
+    //             System.out.println(log.getTimestamp()+ " " + log.getAction());
+    //         }
+    //     }
 
-        int option = 0;
-        System.out.println("-MENÚ ADMINISTRADOR-");
-        System.out.println("1. Crear usuario.");
-        System.out.println("2. Editar usuario.");
-        System.out.println("3. Eliminar usuario.");
-        System.out.println("4. Cambiar tipo de usuario.");
-        System.out.println("5. Mostrar lista de usuarios.");
-        System.out.println("6. Mostrar logs de usuarios.");
-        System.out.println("7. Salir.");
+    //     scanner.nextLine();
 
-        System.out.println("Elija una opción: ");
-        option = scanner.nextInt();
+    //     System.out.println("Presione una tecla para continuar...");
 
-        switch (option) {
-            case 1:
-                createUserView();
-                break;
-            case 2:
-                editUserView();
-                break;
-            case 3: 
-                deleteUserView();
-                break;
-            case 4:
-                changeUserTypeView();
-                break;
-            case 5:
-                usersListView();;
-                break;
-            case 6:
-                usersLogsView();
-                break;
-            case 7:
-                break;
-            default:
-                errorScreenView("Opción inválida!");
-                adminMenu();
-                break;
-        }
-    }
+    //     scanner.nextLine();
 
-    private void usersLogsView() {
-        System.out.println("-LOGS DE USUARIO-");
-        for(UserLog log: userController.getUserLogs()){
-            if(log != null){
-
-                System.out.println(log.getTimestamp()+ " " + log.getAction());
-            }
-        }
-
-        scanner.nextLine();
-
-        System.out.println("Presione una tecla para continuar...");
-
-        scanner.nextLine();
-
-        adminMenu();
-    }
+    //     adminMenu();
+    // }
 
     private void editUserView() {
         System.out.println("-EDITAR DATOS DE USUARIO-");
@@ -140,36 +89,6 @@ public class MainView {
         System.out.println("USUARIO BLOQUEADO, CONSULTE CON EL ADMINISTRADOR!");
     }
 
-    public void standardMenu(){
-
-        int option = 0;
-
-        System.out.println("-MENÚ USUARIO STANDARD-");
-        System.out.println("1. Ver datos de usuario.");
-        System.out.println("2. Editar usuario.");
-        System.out.println("3. Salir.");
-
-        System.out.println("Seleccione una opción: ");
-        option = scanner.nextInt();
-
-        switch (option) {
-            case 1:
-                viewUserData();
-                break;
-            case 2:
-                editUserView();
-                break;
-            case 3:
-                userController.addUserLog("El usuario " + userController.currentUserName() + " Ha cerrado sesión");
-                userController.logoutUser();
-                login();
-            default:
-                errorScreenView("Opción inválida!");
-                standardMenu();
-                break;
-        }
-    }
-
     public void nonRegistered(){
         System.out.println("No eres usuario registrado");
     }
@@ -182,15 +101,15 @@ public class MainView {
         System.out.println("Error: " + error);
     }
 
-    public void viewUserData(){
-        System.out.println("-DATOS DE USUARIO-");
-        System.out.println(userController.currentUserData());
+    // public void viewUserData(){
+    //     System.out.println("-DATOS DE USUARIO-");
+    //     System.out.println(userController.currentUserData());
         
-        System.out.println("Presione un botón para continuar...");
-        scanner.nextLine();
-        scanner.nextLine();
-        standardMenu();
-    }
+    //     System.out.println("Presione un botón para continuar...");
+    //     scanner.nextLine();
+    //     scanner.nextLine();
+    //     standardMenu();
+    // }
 
     public void changeUserTypeView(){
         System.out.println("-CAMBIAR DE TIPO DE USUARIO-");
