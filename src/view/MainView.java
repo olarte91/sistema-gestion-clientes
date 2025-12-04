@@ -82,12 +82,14 @@ public class MainView {
 
     }
 
-    private void blockedUserAccountView(){
+    public void blockedUserAccount(){
         System.out.println("USUARIO BLOQUEADO, CONSULTE CON EL ADMINISTRADOR!");
+        scanner.nextLine();
     }
 
     public void nonRegistered(){
         System.out.println("No eres usuario registrado");
+        scanner.nextLine();
     }
 
     public void createUserView(){

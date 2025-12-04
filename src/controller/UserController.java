@@ -13,11 +13,9 @@ public class UserController {
     private AdminView adminView;
     private StandardView standardView;
     private MainView mainView;
-    
 
     public UserController(UserService userService, AdminView adminView,
-        StandardView standardView, MainView mainView
-    ){
+            StandardView standardView, MainView mainView) {
         this.userService = userService;
         this.adminView = adminView;
         this.standardView = standardView;
@@ -25,48 +23,71 @@ public class UserController {
     }
 
     public void loginUser() {
-        User loginUser = mainView.login();
-        User user = userService.loginUser(loginUser);
-        if(user != null && user.canCreateUser()){
-            adminView.adminMenu();
-        }else if(user != null && !user.canCreateUser()){
-            standardView.standardMenu();
-        }else{
-            mainView.nonRegistered();
-        }
+        while (true) {
+            User loginUser = mainView.login();
+            User user = userService.loginUser(loginUser);
 
+            if (userService.errorCode == 1) {
+                if (userService.errorAttemp < 3) {
+                    mainView.errorScreenView(
+                            "Contraseña errónea, le quedan " + (3 - userService.errorAttemp) + " intentos");
+                    continue;
+                } else {
+                    mainView.blockedUserAccount();
+                    continue;
+                }
+            }
+
+            if(user != null && user.isAccountBlocked()){
+                mainView.blockedUserAccount();
+                continue;
+            }
+
+            if (user != null && user.canCreateUser()) {
+                adminView.adminMenu();
+            } else if (user != null && !user.canCreateUser()) {
+                standardView.standardMenu();
+            }
+
+            if (user == null) {
+                mainView.nonRegistered();
+                continue;
+            }
+
+            break;
+        }
     }
 
-    public User createUser(User user){
+    public User createUser(User user) {
         userService.create(user);
 
         return user;
     }
 
-    public User[] usersList(){
+    public User[] usersList() {
         return userService.getUsers();
     }
 
-    public void logoutUser(){
+    public void logoutUser() {
         userService.logoutUser();
     }
 
-    public int[] getErrorCodeAndAttemps(){
+    public int[] getErrorCodeAndAttemps() {
         int[] codeAttpems = new int[2];
         codeAttpems[0] = userService.errorAttemp;
         codeAttpems[1] = userService.errorCode;
         return codeAttpems;
     }
 
-    public void addUserLog(String message){
+    public void addUserLog(String message) {
         userService.addUserLog(message);
     }
 
-    public UserLog[] getUserLogs(){
+    public UserLog[] getUserLogs() {
         return userService.getUserLogs();
     }
 
-    public String currentUserData(){
+    public String currentUserData() {
         return userService.currentUserData();
     }
 

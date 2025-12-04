@@ -21,16 +21,16 @@ public class UserService implements UserOperations {
 
     // @Override
     // public User create(User user) {
-    //     // if(!currentUser.canCreateUser()){
-    //     // return null;
-    //     // }
+    // // if(!currentUser.canCreateUser()){
+    // // return null;
+    // // }
 
-    //     // userRegister.create(user);
+    // // userRegister.create(user);
 
-    //     // currentUser.addUserLog(new UserLog("Se ha creado el usuario: " +
-    //     // user.getUserName()));
+    // // currentUser.addUserLog(new UserLog("Se ha creado el usuario: " +
+    // // user.getUserName()));
 
-    //     // return user;
+    // // return user;
     // }
 
     @Override
@@ -56,26 +56,26 @@ public class UserService implements UserOperations {
     }
 
     public User loginUser(User user) {
+        errorCode = 0;
 
         for (User userLogin : userRegister.users()) {
-            if (!userLogin.getUserName().equals(user.getUserName())) {
-                return sesion.getCurrentUser();
-            } else {
+            if (userLogin.getUserName().equals(user.getUserName())) {
                 if (!userLogin.getPassword().equals(user.getPassword())) {
-                    sesion.loginUser(user);
                     errorCode = 1;
                     errorAttemp += 1;
-                    if(errorAttemp == 3){
-                        sesion.getCurrentUser().blockAccount();
+                    if (errorAttemp >= 3) {
+                        userLogin.blockAccount();
                     }
-                }else{
+                    return null;
+                } else {
+                    errorAttemp = 0; 
                     sesion.loginUser(userLogin);
                     return sesion.getCurrentUser();
                 }
             }
-
+            return null;
         }
-        return sesion.getCurrentUser();
+        return null; 
     }
 
     public void logoutUser() {
@@ -87,7 +87,8 @@ public class UserService implements UserOperations {
     }
 
     public String currentUserData() {
-        return "Name: " + sesion.getCurrentUser().getName() + "\n" + "UserName: " + sesion.getCurrentUser().getUserName();
+        return "Name: " + sesion.getCurrentUser().getName() + "\n" + "UserName: "
+                + sesion.getCurrentUser().getUserName();
     }
 
     public UserLog[] getUserLogs() {
