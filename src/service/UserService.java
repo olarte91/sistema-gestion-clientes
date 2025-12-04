@@ -4,32 +4,34 @@ import model.User;
 import model.UserLog;
 import model.UserOperations;
 import model.UserRegister;
+import util.SessionManager;
 
-public class UserService implements UserOperations{
+public class UserService implements UserOperations {
+
+    SessionManager sesion = SessionManager.getIsntance();
 
     public int errorCode = 0;
     public int errorAttemp = 0;
 
     private final UserRegister userRegister;
-    
-    private User currentUser = null;
 
-    public UserService(UserRegister userRegister){
+    public UserService(UserRegister userRegister) {
         this.userRegister = userRegister;
     }
 
-    @Override
-    public User create(User user) {
-        if(!currentUser.canCreateUser()){
-            return null;
-        }
+    // @Override
+    // public User create(User user) {
+    //     // if(!currentUser.canCreateUser()){
+    //     // return null;
+    //     // }
 
-        userRegister.create(user);
+    //     // userRegister.create(user);
 
-        currentUser.addUserLog(new UserLog("Se ha creado el usuario: " + user.getUserName()));
+    //     // currentUser.addUserLog(new UserLog("Se ha creado el usuario: " +
+    //     // user.getUserName()));
 
-        return user;
-    }
+    //     // return user;
+    // }
 
     @Override
     public User findById(int id) {
@@ -53,53 +55,49 @@ public class UserService implements UserOperations{
         return userRegister.users();
     }
 
-    public User loginUser(User user){
+    public User loginUser(User user) {
 
-        for(User userLogin: userRegister.users()){
-            if(userLogin.getUserName().equals(user.getUserName())){
-
-                if(userLogin.getPassword().equals(user.getPassword())){
-                    currentUser = userLogin;
-                    errorCode = 0;
-                    return currentUser;
-                }else{
-                    currentUser = userLogin;
+        for (User userLogin : userRegister.users()) {
+            if (!userLogin.getUserName().equals(user.getUserName())) {
+                return sesion.getCurrentUser();
+            } else {
+                if (!userLogin.getPassword().equals(user.getPassword())) {
+                    sesion.loginUser(user);
                     errorCode = 1;
                     errorAttemp += 1;
                     if(errorAttemp == 3){
-                        currentUser.blockAccount();
+                        sesion.getCurrentUser().blockAccount();
                     }
-                    return currentUser;
+                }else{
+                    sesion.loginUser(userLogin);
+                    return sesion.getCurrentUser();
                 }
-
-            }else{
-                return currentUser;
             }
+
         }
-
-        return currentUser;
-       
+        return sesion.getCurrentUser();
     }
 
-    public void logoutUser(){
-        currentUser = null;
+    public void logoutUser() {
+        sesion.logoutUser();
     }
 
-    public void addUserLog(String message){
-        currentUser.addUserLog(new UserLog(message));
+    public void addUserLog(String message) {
+        sesion.getCurrentUser().addUserLog(new UserLog(message));
     }
 
-    public User currentUser(){
-        return currentUser;
+    public String currentUserData() {
+        return "Name: " + sesion.getCurrentUser().getName() + "\n" + "UserName: " + sesion.getCurrentUser().getUserName();
     }
 
-    public String currentUserData(){
-        return "Name: " + currentUser.getName() + "\n" + "UserName: " + currentUser.getUserName();
+    public UserLog[] getUserLogs() {
+        return sesion.getCurrentUser().getUserLogs();
     }
 
-    public UserLog[] getUserLogs(){
-        return currentUser.getUserLogs();
+    @Override
+    public User create(User user) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'create'");
     }
 
-  
 }

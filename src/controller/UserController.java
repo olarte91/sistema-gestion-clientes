@@ -66,10 +66,6 @@ public class UserController {
         return userService.getUserLogs();
     }
 
-    public String currentUserName(){
-        return userService.currentUser().getUserName();
-    }
-
     public String currentUserData(){
         return userService.currentUserData();
     }

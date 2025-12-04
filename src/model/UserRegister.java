@@ -9,7 +9,7 @@ public class UserRegister {
     public UserRegister(User user){
 
         users[0] = user;
-        slotCount += 1;;
+        slotCount += 1;
     }
 
     public User[] users(){

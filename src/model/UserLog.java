@@ -17,7 +17,7 @@ public class UserLog {
     }
 
     public String getTimestamp(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dMM-d HH:mm:ss");
         return timestamp.format(formatter);
     }
 }

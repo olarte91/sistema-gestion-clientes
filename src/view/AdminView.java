@@ -74,8 +74,7 @@ public class AdminView {
     }
 
     private void createUser() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createUser'");
+        System.out.println("-CREAR USUARIO-");
     }
 
  

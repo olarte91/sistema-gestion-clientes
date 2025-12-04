@@ -19,15 +19,12 @@ public class MainView {
     // }
 
     public User login(){
-        User user = new User();
         System.out.println("SISTEMA DE GESTIÓN DE USUARIOS");
         System.out.println("-Inicio de sesión-");
         System.out.println("Usuario: ");
         String username = scanner.nextLine();
-        user.setUserName(username);
         System.out.println("Contraseña: ");
         String password = scanner.nextLine();
-        user.setPassword(password);
 
         return new User(username, password);
 
