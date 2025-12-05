@@ -27,31 +27,6 @@ public class MainView {
         String password = scanner.nextLine();
 
         return new User(username, password);
-
-    //     if(usuarioLogin != null){
-    //         if (!usuarioLogin.canCreateUser() && userController.getErrorCodeAndAttemps()[1] == 0
-    //     && !usuarioLogin.isAccountBlocked()) {
-    //             userController.addUserLog("usuario " + userController.currentUserName() + " ha iniciado sesión");
-    //             standardMenu();
-    //         }else if(usuarioLogin.canCreateUser() && userController.getErrorCodeAndAttemps()[1] == 0
-    //     && !usuarioLogin.isAccountBlocked()){
-    //             userController.addUserLog("usuario " + userController.currentUserName() + " ha iniciado sesión");
-    //             adminMenu();
-    //         } else if (userController.getErrorCodeAndAttemps()[1] == 1
-    //                 && userController.getErrorCodeAndAttemps()[0] <= 3
-    //             && !usuarioLogin.isAccountBlocked()) {
-
-    //             errorScreenView("Contraseña incorrecta, vuelva a intentarlo");
-    //             System.out.println("Intentos restantes: " + (3 - userController.getErrorCodeAndAttemps()[0]));
-    //             login();
-    //     } else {
-    //         blockedUserAccountView();
-    //         login();
-    //     }
-    //     nonRegistered();
-    //     login();
-    // }
-
     }
 
     // private void usersLogsView() {

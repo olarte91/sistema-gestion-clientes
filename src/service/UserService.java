@@ -1,5 +1,6 @@
 package service;
 
+import model.StandardUser;
 import model.User;
 import model.UserLog;
 import model.UserOperations;
@@ -19,19 +20,11 @@ public class UserService implements UserOperations {
         this.userRegister = userRegister;
     }
 
-    // @Override
-    // public User create(User user) {
-    // // if(!currentUser.canCreateUser()){
-    // // return null;
-    // // }
-
-    // // userRegister.create(user);
-
-    // // currentUser.addUserLog(new UserLog("Se ha creado el usuario: " +
-    // // user.getUserName()));
-
-    // // return user;
-    // }
+    @Override
+    public User create(User user) {
+        User newUser = new StandardUser(user.getUserName(), user.getName(), user.getPassword());
+        return userRegister.create(newUser);   
+    }
 
     @Override
     public User findById(int id) {
@@ -68,14 +61,14 @@ public class UserService implements UserOperations {
                     }
                     return null;
                 } else {
-                    errorAttemp = 0; 
+                    errorAttemp = 0;
                     sesion.loginUser(userLogin);
                     return sesion.getCurrentUser();
                 }
             }
             return null;
         }
-        return null; 
+        return null;
     }
 
     public void logoutUser() {
@@ -93,12 +86,6 @@ public class UserService implements UserOperations {
 
     public UserLog[] getUserLogs() {
         return sesion.getCurrentUser().getUserLogs();
-    }
-
-    @Override
-    public User create(User user) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
     }
 
 }

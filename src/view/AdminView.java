@@ -2,12 +2,13 @@ package view;
 
 import java.util.Scanner;
 
+import model.User;
+
 public class AdminView {
 
     Scanner scanner = new Scanner(System.in);
 
-    public void adminMenu() {
-        int option = 0;
+    public int adminMenu() {
         System.out.println("-MENÚ ADMINISTRADOR-");
         System.out.println("1. Crear usuario.");
         System.out.println("2. Editar usuario.");
@@ -18,34 +19,7 @@ public class AdminView {
         System.out.println("7. Salir.");
 
         System.out.println("Elija una opción: ");
-        option = scanner.nextInt();
-
-        switch (option) {
-            case 1:
-                createUser();
-                break;
-            case 2:
-                editUser();
-                break;
-            case 3:
-                deleteUser();
-                break;
-            case 4:
-                changeUserType();
-                break;
-            case 5:
-                usersList();
-                break;
-            case 6:
-                usersList();
-                break;
-            case 7:
-                break;
-            default:
-                error("Opción inválida!");
-                adminMenu();
-                break;
-        }
+        return scanner.nextInt();
     }
 
     private void error(String string) {
@@ -53,9 +27,17 @@ public class AdminView {
         throw new UnsupportedOperationException("Unimplemented method 'error'");
     }
 
-    private void usersList() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'usersList'");
+    public void usersList(User[] users) {
+
+        for(User user: users){
+            if(user != null){
+                System.out.println("ID: " + user.getId());
+                System.out.println("Username: " + user.getUserName());
+                System.out.println("Nombre: " + user.getName());
+                System.out.println("+-----------------------------+");
+            }
+            scanner.nextLine();
+        }        
     }
 
     private void changeUserType() {
@@ -73,8 +55,22 @@ public class AdminView {
         throw new UnsupportedOperationException("Unimplemented method 'editUser'");
     }
 
-    private void createUser() {
+    public User createUser() {
         System.out.println("-CREAR USUARIO-");
+        scanner.nextLine();
+        System.out.println("Ingrese el nombre de usuario: ");
+        String username = scanner.nextLine();
+        System.out.println("Ingrese el nombre completo del usuario: ");
+        String fullName = scanner.nextLine();
+        System.out.println("Ingrese la contraseña: ");
+        String password = scanner.nextLine();
+
+        return new User(username, fullName, password);
+    }
+
+    public void showMessage(String message){
+        System.out.println(message);
+        scanner.nextLine();
     }
 
  

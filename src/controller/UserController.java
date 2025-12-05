@@ -23,9 +23,9 @@ public class UserController {
     }
 
     public void loginUser() {
+        boolean logout = false;
         while (true) {
-            User loginUser = mainView.login();
-            User user = userService.loginUser(loginUser);
+            User user = userService.loginUser(mainView.login());
 
             if (userService.errorCode == 1) {
                 if (userService.errorAttemp < 3) {
@@ -38,13 +38,26 @@ public class UserController {
                 }
             }
 
-            if(user != null && user.isAccountBlocked()){
+            if (user != null && user.isAccountBlocked()) {
                 mainView.blockedUserAccount();
                 continue;
             }
 
             if (user != null && user.canCreateUser()) {
-                adminView.adminMenu();
+
+                while (!logout) {
+                    int option = adminView.adminMenu();
+
+                    switch (option) {
+                        case 1:
+                            createUser();
+                            break;
+                        case 5:
+                            usersList();
+                            break;
+
+                    }
+                }
             } else if (user != null && !user.canCreateUser()) {
                 standardView.standardMenu();
             }
@@ -58,25 +71,17 @@ public class UserController {
         }
     }
 
-    public User createUser(User user) {
-        userService.create(user);
-
-        return user;
+    public void createUser() {
+        userService.create(adminView.createUser());
+        adminView.showMessage("Usuario creado con éxito!");
     }
 
-    public User[] usersList() {
-        return userService.getUsers();
+    public void usersList() {
+        adminView.usersList(userService.getUsers());
     }
 
     public void logoutUser() {
         userService.logoutUser();
-    }
-
-    public int[] getErrorCodeAndAttemps() {
-        int[] codeAttpems = new int[2];
-        codeAttpems[0] = userService.errorAttemp;
-        codeAttpems[1] = userService.errorCode;
-        return codeAttpems;
     }
 
     public void addUserLog(String message) {
