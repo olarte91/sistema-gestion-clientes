@@ -43,7 +43,7 @@ public class UserController {
                 continue;
             }
 
-            if (user != null && user.canCreateUser()) {
+            if (user != null && user.canCreateUser) {
 
                 while (!logout) {
                     int option = adminView.adminMenu();
@@ -58,7 +58,7 @@ public class UserController {
 
                     }
                 }
-            } else if (user != null && !user.canCreateUser()) {
+            } else if (user != null && !user.canCreateUser) {
                 standardView.standardMenu();
             }
 
@@ -73,7 +73,6 @@ public class UserController {
 
     public void createUser() {
         userService.create(adminView.createUser());
-        adminView.showMessage("Usuario creado con éxito!");
     }
 
     public void usersList() {

@@ -1,11 +1,11 @@
 package service;
 
-import model.StandardUser;
 import model.User;
 import model.UserLog;
 import model.UserOperations;
 import model.UserRegister;
 import util.SessionManager;
+import util.UserType;
 
 public class UserService implements UserOperations {
 
@@ -22,8 +22,7 @@ public class UserService implements UserOperations {
 
     @Override
     public User create(User user) {
-        User newUser = new StandardUser(user.getUserName(), user.getName(), user.getPassword());
-        return userRegister.create(newUser);   
+        return userRegister.create(user);   
     }
 
     @Override

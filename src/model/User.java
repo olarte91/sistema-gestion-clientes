@@ -1,5 +1,7 @@
 package model;
 
+import util.UserType;
+
 public class User {
 
     private static Integer userId = 1;
@@ -10,12 +12,27 @@ public class User {
     private Boolean isAccountBlocked = false;
     private UserLog[] userLogs = new UserLog[100];
     private int logCounter = 0;
+    private UserType userType;
+    public boolean canCreateUser = false;
+    public boolean canEditUser = false;
+    public boolean canDeleteUser = false;
 
-    public User(String username, String name, String password){
+    public User(String username, String name, String password, UserType type){
         this.id = userId ++;
-        this.name = name;
         this.username = username;
+        this.name = name;
         this.password = password;
+
+        if(type == UserType.ADMIN){
+            canCreateUser();
+            canEditUser();
+            canDeleteUser();
+            this.userType = type;
+        }else{
+            canEditUser();
+            this.userType = type;
+        }
+       
     }
 
     public User(String username, String password){
@@ -24,7 +41,6 @@ public class User {
     }
 
     public User(){
-        this.id = userId ++;
     }
 
     public Integer getId(){
@@ -66,18 +82,26 @@ public class User {
         logCounter += 1;
     }
 
+    public String getUserType() {
+        return userType.toString();
+    }
+
+    public void setUserType(UserType type){
+        this.userType = type;
+    }
+
     //Permisos de usuario
 
-    public boolean canCreateUser(){
-        return false;
+    public void canCreateUser(){
+        canCreateUser = true;
     }
 
-    public boolean canEditUser(){
-        return false;
+    public void canEditUser(){
+        canEditUser = true;
     }
 
-    public boolean canDeleteUser(){
-        return false;
+    public void canDeleteUser(){
+        canDeleteUser = true;
     }
 
     public boolean isAccountBlocked(){

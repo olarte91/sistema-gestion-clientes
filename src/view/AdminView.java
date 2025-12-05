@@ -3,6 +3,7 @@ package view;
 import java.util.Scanner;
 
 import model.User;
+import util.UserType;
 
 public class AdminView {
 
@@ -31,13 +32,16 @@ public class AdminView {
 
         for(User user: users){
             if(user != null){
+                System.out.println("+-----------------------------+");
                 System.out.println("ID: " + user.getId());
                 System.out.println("Username: " + user.getUserName());
                 System.out.println("Nombre: " + user.getName());
+                System.out.println("Tipo de usuario: " + user.getUserType());
                 System.out.println("+-----------------------------+");
             }
-            scanner.nextLine();
-        }        
+        }   
+        scanner.nextLine(); 
+        scanner.nextLine();    
     }
 
     private void changeUserType() {
@@ -65,7 +69,7 @@ public class AdminView {
         System.out.println("Ingrese la contraseña: ");
         String password = scanner.nextLine();
 
-        return new User(username, fullName, password);
+        return new User(username, fullName, password, UserType.STANDARD);
     }
 
     public void showMessage(String message){
