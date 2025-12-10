@@ -23,15 +23,15 @@ public class AdminView {
         return scanner.nextInt();
     }
 
-    private void error(String string) {
+    public void error(String string) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'error'");
     }
 
     public void usersList(User[] users) {
 
-        for(User user: users){
-            if(user != null){
+        for (User user : users) {
+            if (user != null) {
                 System.out.println("+-----------------------------+");
                 System.out.println("ID: " + user.getId());
                 System.out.println("Username: " + user.getUserName());
@@ -39,24 +39,45 @@ public class AdminView {
                 System.out.println("Tipo de usuario: " + user.getUserType());
                 System.out.println("+-----------------------------+");
             }
-        }   
-        scanner.nextLine(); 
-        scanner.nextLine();    
+        }
+        scanner.nextLine();
+        scanner.nextLine();
     }
 
-    private void changeUserType() {
+    public void changeUserType() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'changeUserType'");
     }
 
-    private void deleteUser() {
+    public void deleteUser() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deleteUser'");
     }
 
-    private void editUser() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'editUser'");
+    public int requestUserId() {
+        System.out.println("Ingrese el id del usuario: ");
+        return scanner.nextInt();
+    }
+
+    public int updateMenu() {
+        System.out.println("-ACTUALIZAR DATOS DE USUARIO-");
+        System.out.println("Seleccione el apartado a actualizar: ");
+        System.out.println("1. Nombre del usuario.");
+        System.out.println("2. Contraseña. ");
+
+        return scanner.nextInt();
+    }
+
+    public String updateUsername() {
+        scanner.nextLine();
+        System.out.println("Ingrese el nuevo username: ");
+        return scanner.nextLine();
+    }
+
+    public String updatePassword() {
+        scanner.nextLine();
+        System.out.println("Ingrese la nueva contraseña");
+        return scanner.nextLine();
     }
 
     public User createUser() {
@@ -72,11 +93,9 @@ public class AdminView {
         return new User(username, fullName, password, UserType.STANDARD);
     }
 
-    public void showMessage(String message){
+    public void showMessage(String message) {
         System.out.println(message);
         scanner.nextLine();
     }
-
- 
 
 }

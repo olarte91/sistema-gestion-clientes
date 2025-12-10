@@ -5,7 +5,6 @@ import model.UserLog;
 import model.UserOperations;
 import model.UserRegister;
 import util.SessionManager;
-import util.UserType;
 
 public class UserService implements UserOperations {
 
@@ -31,9 +30,8 @@ public class UserService implements UserOperations {
     }
 
     @Override
-    public User update(Integer id, User user) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    public void update(User user) {
+        userRegister.update(user);
     }
 
     @Override
@@ -58,14 +56,12 @@ public class UserService implements UserOperations {
                     if (errorAttemp >= 3) {
                         userLogin.blockAccount();
                     }
-                    return null;
                 } else {
                     errorAttemp = 0;
                     sesion.loginUser(userLogin);
                     return sesion.getCurrentUser();
                 }
             }
-            return null;
         }
         return null;
     }

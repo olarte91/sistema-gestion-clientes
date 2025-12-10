@@ -27,25 +27,23 @@ public class UserRegister {
     public User findById(int id) {
         User user = null;
         for (int i = 0; i < users.length; i ++) {
-            if (users[i].getId().equals(user.getId())) {
-                user = users[i];
-                userPosition = i;
-            }
+            if(users[i] != null){
+                if (users[i].getId() == id) {
+                    user = users[i];
+                    userPosition = i;
+                }
+            }else{
+                break;
+            }  
         }
         return user;
     }
 
     public User update(User user){
-        User updateUser = findById(user.getId());
+        users[userPosition] = user;
 
-        if(updateUser != null){
-            updateUser.setName(user.getName());
-            updateUser.setUserName(user.getUserName());
-            updateUser.setPassword(user.getPassword());
-        }
-
-        return updateUser;
-    }
+        return users[userPosition];
+    }   
 
     public void delete(User user){
         User deleteUser = findById(user.getId());

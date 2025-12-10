@@ -44,18 +44,23 @@ public class UserController {
             }
 
             if (user != null && user.canCreateUser) {
-
+                logout = false;
                 while (!logout) {
-                    int option = adminView.adminMenu();
+                   int option = adminView.adminMenu();
 
                     switch (option) {
                         case 1:
                             createUser();
                             break;
+                        case 2:
+                            updateUser();
+                            break;
                         case 5:
                             usersList();
                             break;
-
+                        case 7:
+                            logout = true;
+                            adminView.showMessage("Cerrando sesión");                
                     }
                 }
             } else if (user != null && !user.canCreateUser) {
@@ -66,10 +71,44 @@ public class UserController {
                 mainView.nonRegistered();
                 continue;
             }
-
-            break;
         }
     }
+
+    public void updateUser() {
+        int userId = adminView.requestUserId();
+        User user = userService.findById(userId);
+
+        if(user == null){
+            adminView.showMessage("Usuario no encontrado");
+            return;
+        }
+
+        boolean option = false;
+
+        while (!option) {
+            int menuOption = adminView.updateMenu();
+
+            switch(menuOption){
+                case 1:
+                    user.setName(adminView.updateUsername());
+                    adminView.showMessage("Nombre actualizado con éxito!");
+                    option = true;
+                    break;
+                case 2:
+                    user.setPassword(adminView.updatePassword());
+                    adminView.showMessage("Contraseña actualizada con éxito!");
+                    option = true;
+                    break;
+                default:
+                    adminView.showMessage("Opción inválida");
+            }
+        }
+
+        userService.update(user);
+
+
+    }
+
 
     public void createUser() {
         userService.create(adminView.createUser());
