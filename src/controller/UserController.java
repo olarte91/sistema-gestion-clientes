@@ -55,6 +55,9 @@ public class UserController {
                         case 2:
                             updateUser();
                             break;
+                        case 3:
+                            delteUser();
+                            break;
                         case 5:
                             usersList();
                             break;
@@ -107,6 +110,17 @@ public class UserController {
         userService.update(user);
 
 
+    }
+
+    public void delteUser(){
+        Integer id = adminView.requestUserId();
+
+        if(userService.delete(id)){
+            adminView.showMessage("Usuario Eliminado exitosamente");
+        }else{
+            adminView.showMessage("Usurio no encontrado");
+        }
+        
     }
 
 

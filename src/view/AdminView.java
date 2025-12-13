@@ -50,8 +50,7 @@ public class AdminView {
     }
 
     public void deleteUser() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteUser'");
+        System.out.println("Eliminar usuario");
     }
 
     public int requestUserId() {
@@ -95,6 +94,7 @@ public class AdminView {
 
     public void showMessage(String message) {
         System.out.println(message);
+        scanner.nextLine();
         scanner.nextLine();
     }
 

@@ -45,18 +45,22 @@ public class UserRegister {
         return users[userPosition];
     }   
 
-    public void delete(User user){
-        User deleteUser = findById(user.getId());
+    public boolean delete(Integer id) {
+        User deleteUser = findById(id);
 
-        if(deleteUser != null){
-            users[userPosition] = null;
-            for(User userDelete: users){
-                if(userDelete == null){
-                    userDelete = users[userPosition +1];
-                    users[userPosition + 1] = null;
-                }
+        if (deleteUser != null) {
+            for (int i = userPosition; i < slotCount - 1; i++) {
+                users[i] = users[i + 1];
             }
+
+            users[slotCount - 1] = null;
+
+            slotCount--;
+
+            return true;
         }
+
+        return false;
     }
 
 

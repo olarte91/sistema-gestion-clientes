@@ -35,9 +35,8 @@ public class UserService implements UserOperations {
     }
 
     @Override
-    public boolean delete(User user) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    public boolean delete(Integer userId) {
+        return userRegister.delete(userId);
     }
 
     @Override
