@@ -38,6 +38,7 @@ public class AdminView {
                 System.out.println("Username: " + user.getUserName());
                 System.out.println("Nombre: " + user.getName());
                 System.out.println("Tipo de usuario: " + user.getUserType());
+                System.out.println("Usuario bloqueado: " + (user.isAccountBlocked() ? "si" : "no"));
                 System.out.println("+-----------------------------+");
             }
         }
