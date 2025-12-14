@@ -47,16 +47,6 @@ public class MainView {
     //     adminMenu();
     // }
 
-    private void editUserView() {
-        System.out.println("-EDITAR DATOS DE USUARIO-");
-        System.out.println("Seleccione el campo que desea editar.");
-        System.out.println("1. ");
-    }
-
-    private void deleteUserView(){
-
-    }
-
     public void blockedUserAccount(){
         System.out.println("USUARIO BLOQUEADO, CONSULTE CON EL ADMINISTRADOR!");
         scanner.nextLine();

@@ -21,7 +21,7 @@ public class UserService implements UserOperations {
 
     @Override
     public User create(User user) {
-        return userRegister.create(user);   
+        return userRegister.create(user);
     }
 
     @Override
@@ -41,13 +41,17 @@ public class UserService implements UserOperations {
 
     @Override
     public User[] getUsers() {
-        return userRegister.users();
+        return userRegister.getAllUsers();
     }
 
     public User loginUser(User user) {
         errorCode = 0;
 
-        for (User userLogin : userRegister.users()) {
+        for (User userLogin : userRegister.getAllUsers()) {
+            if (userLogin == null) {
+                return null;
+            }
+
             if (userLogin.getUserName().equals(user.getUserName())) {
                 if (!userLogin.getPassword().equals(user.getPassword())) {
                     errorCode = 1;
@@ -55,6 +59,7 @@ public class UserService implements UserOperations {
                     if (errorAttemp >= 3) {
                         userLogin.blockAccount();
                     }
+                    return null;
                 } else {
                     errorAttemp = 0;
                     sesion.loginUser(userLogin);
@@ -84,7 +89,7 @@ public class UserService implements UserOperations {
 
     @Override
     public boolean changeUserRole(Integer userId) {
-        return userRegister.changeUserRole(userId);   
-     }
+        return userRegister.changeUserRole(userId);
+    }
 
 }

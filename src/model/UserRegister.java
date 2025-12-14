@@ -14,7 +14,7 @@ public class UserRegister {
         slotCount += 1;
     }
 
-    public User[] users(){
+    public User[] getAllUsers(){
         return users;
     }
 
