@@ -14,10 +14,11 @@ public class AdminView {
         System.out.println("1. Crear usuario.");
         System.out.println("2. Editar usuario.");
         System.out.println("3. Eliminar usuario.");
-        System.out.println("4. Cambiar tipo de usuario.");
-        System.out.println("5. Mostrar lista de usuarios.");
-        System.out.println("6. Mostrar logs de usuarios.");
-        System.out.println("7. Salir.");
+        System.out.println("4. Cambiar rol de usuario.");
+        System.out.println("5. Desbloquear usuario");
+        System.out.println("6. Mostrar lista de usuarios.");
+        System.out.println("7. Mostrar logs de usuarios.");
+        System.out.println("8. Salir.");
 
         System.out.println("Elija una opción: ");
         return scanner.nextInt();

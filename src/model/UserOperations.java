@@ -7,5 +7,6 @@ public interface UserOperations {
     void update(User user);
     boolean delete(Integer userId);
     User[] getUsers();
+    boolean changeUserRole(Integer userId);
 
 }

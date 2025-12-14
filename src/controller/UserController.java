@@ -58,10 +58,13 @@ public class UserController {
                         case 3:
                             delteUser();
                             break;
-                        case 5:
+                        case 4:
+                            changeUserRole();
+                            break;
+                        case 6:
                             usersList();
                             break;
-                        case 7:
+                        case 8:
                             logout = true;
                             adminView.showMessage("Cerrando sesión");                
                     }
@@ -108,6 +111,20 @@ public class UserController {
         }
 
         userService.update(user);
+
+
+    }
+
+    public void changeUserRole(){
+        Integer id = adminView.requestUserId();
+
+
+
+        if(!userService.changeUserRole(id)){
+            adminView.showMessage("Usuario no encontrado!");
+        }else{
+            adminView.showMessage("Cambio de rol exitoso");
+        }
 
 
     }

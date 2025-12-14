@@ -82,4 +82,9 @@ public class UserService implements UserOperations {
         return sesion.getCurrentUser().getUserLogs();
     }
 
+    @Override
+    public boolean changeUserRole(Integer userId) {
+        return userRegister.changeUserRole(userId);   
+     }
+
 }

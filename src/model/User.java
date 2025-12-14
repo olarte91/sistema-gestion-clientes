@@ -82,8 +82,8 @@ public class User {
         logCounter += 1;
     }
 
-    public String getUserType() {
-        return userType.toString();
+    public UserType getUserType() {
+        return userType;
     }
 
     public void setUserType(UserType type){
@@ -93,15 +93,15 @@ public class User {
     //Permisos de usuario
 
     public void canCreateUser(){
-        canCreateUser = true;
+        canCreateUser = !canCreateUser;
     }
 
     public void canEditUser(){
-        canEditUser = true;
+        canEditUser = !canEditUser;
     }
 
     public void canDeleteUser(){
-        canDeleteUser = true;
+        canDeleteUser = !canDeleteUser;
     }
 
     public boolean isAccountBlocked(){
