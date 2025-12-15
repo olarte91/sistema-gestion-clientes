@@ -11,7 +11,7 @@ public class UserService implements UserOperations {
     SessionManager sesion = SessionManager.getIsntance();
 
     public int errorCode = 0;
-    public int errorAttemp = 0;
+    public int errorAttemp = 0; 
 
     private final UserRegister userRegister;
 
@@ -21,6 +21,7 @@ public class UserService implements UserOperations {
 
     @Override
     public User create(User user) {
+        sesion.getCurrentUser().addUserLog(new UserLog("ha creado un nuevo usuario " + user.getUserName()));
         return userRegister.create(user);
     }
 
@@ -83,13 +84,19 @@ public class UserService implements UserOperations {
                 + sesion.getCurrentUser().getUserName();
     }
 
-    public UserLog[] getUserLogs() {
-        return sesion.getCurrentUser().getUserLogs();
+    public User getUserLogs(Integer userId) {
+        return userRegister.findById(userId);
     }
 
     @Override
     public boolean changeUserRole(Integer userId) {
         return userRegister.changeUserRole(userId);
+    }
+
+    @Override
+    public boolean unlockUser(Integer userId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'unlockUser'");
     }
 
 }

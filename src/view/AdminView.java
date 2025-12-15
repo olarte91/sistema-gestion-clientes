@@ -3,6 +3,7 @@ package view;
 import java.util.Scanner;
 
 import model.User;
+import model.UserLog;
 import util.UserType;
 
 public class AdminView {
@@ -24,11 +25,6 @@ public class AdminView {
         return scanner.nextInt();
     }
 
-    public void error(String string) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'error'");
-    }
-
     public void usersList(User[] users) {
 
         for (User user : users) {
@@ -44,15 +40,6 @@ public class AdminView {
         }
         scanner.nextLine();
         scanner.nextLine();
-    }
-
-    public void changeUserType() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'changeUserType'");
-    }
-
-    public void deleteUser() {
-        System.out.println("Eliminar usuario");
     }
 
     public int requestUserId() {
@@ -98,6 +85,18 @@ public class AdminView {
         System.out.println(message);
         scanner.nextLine();
         scanner.nextLine();
+    }
+
+    public void showUserLogs(User user) {
+       System.out.println("-LOGS DE USUARIO-\n");
+
+       for(UserLog userLog : user.getUserLogs()){
+        if(userLog != null){
+            System.out.println("El usuario "+ user.getUserName() + " " + userLog.getAction() + " " + userLog.getTimestamp());
+        }
+       }
+       scanner.nextLine();
+       scanner.nextLine();
     }
 
 }

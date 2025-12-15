@@ -64,6 +64,9 @@ public class UserController {
                         case 6:
                             usersList();
                             break;
+                        case 7:
+                            getUserLogs();
+                            break;
                         case 8:
                             logout = true;
                             adminView.showMessage("Cerrando sesión");                
@@ -157,8 +160,15 @@ public class UserController {
         userService.addUserLog(message);
     }
 
-    public UserLog[] getUserLogs() {
-        return userService.getUserLogs();
+    public void getUserLogs() {
+        
+        Integer userId = adminView.requestUserId();
+
+        if(userService.findById(userId) != null){
+            adminView.showUserLogs(userService.findById(userId));
+        }else{
+            adminView.showMessage("Usuario no encontrado!");
+        }
     }
 
     public String currentUserData() {
