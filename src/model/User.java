@@ -109,7 +109,7 @@ public class User {
     }
 
     public void blockAccount(){
-        isAccountBlocked = true;
+        isAccountBlocked = !isAccountBlocked;
     }
 
 }

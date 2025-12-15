@@ -8,6 +8,6 @@ public interface UserOperations {
     boolean delete(Integer userId);
     User[] getUsers();
     boolean changeUserRole(Integer userId);
-    boolean unlockUser(Integer userId);
+    Integer lockUnlockUser(Integer userId);
 
 }

@@ -94,9 +94,20 @@ public class UserService implements UserOperations {
     }
 
     @Override
-    public boolean unlockUser(Integer userId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'unlockUser'");
+    public Integer lockUnlockUser(Integer userId) {
+
+        User user = userRegister.findById(userId);
+
+        if(user != null){
+            if(!user.isAccountBlocked()){
+                user.blockAccount();
+                return 1;
+            }else{
+                user.blockAccount();
+                return 2;
+            }
+        }
+        return 3;
     }
 
 }

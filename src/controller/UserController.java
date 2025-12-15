@@ -61,6 +61,9 @@ public class UserController {
                         case 4:
                             changeUserRole();
                             break;
+                        case 5:
+                            lockUnlockUser();
+                            break;
                         case 6:
                             usersList();
                             break;
@@ -173,6 +176,22 @@ public class UserController {
 
     public String currentUserData() {
         return userService.currentUserData();
+    }
+
+    public void lockUnlockUser(){
+        Integer userId = adminView.requestUserId();
+
+        switch(userService.lockUnlockUser(userId)){
+            case 1:
+                adminView.showMessage("Usuario Bloqueado");
+                break;
+            case 2:
+                adminView.showMessage("Usuairo Desbloqueado");
+                break;
+            default:
+                adminView.showMessage("Usuario no encontrado");
+                break;
+        }
     }
 
 }
