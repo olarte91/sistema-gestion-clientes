@@ -9,7 +9,7 @@ import util.UserType;
 
 public class UserService implements UserOperations {
 
-    SessionManager sesion = SessionManager.getIsntance();
+    public SessionManager sesion = SessionManager.getIsntance();
 
     public int errorCode = 0;
     public int errorAttemp = 0; 

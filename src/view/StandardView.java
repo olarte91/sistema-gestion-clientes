@@ -2,12 +2,13 @@ package view;
 
 import java.util.Scanner;
 
+import model.User;
+
 public class StandardView {
 
     Scanner scanner = new Scanner(System.in);
 
-    public void standardMenu() {
-        int option = 0;
+    public int standardMenu() {
 
         System.out.println("-MENÚ USUARIO STANDARD-");
         System.out.println("1. Ver datos de usuario.");
@@ -15,42 +16,45 @@ public class StandardView {
         System.out.println("3. Salir.");
 
         System.out.println("Seleccione una opción: ");
-        option = scanner.nextInt();
-
-        switch (option) {
-        case 1:
-        viewUserData();
-        break;
-        case 2:
-        editUser();
-        break;
-        case 3:
-            logoutUser();
-        default:
-        error("Opción inválida!");
-        standardMenu();
-        break;
-        }
+        return scanner.nextInt();
     }
 
-    private void logoutUser() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'logoutUser'");
+    public void userData(User user) {
+        System.out.println("+-----------------------------+");
+        System.out.println("ID: " + user.getId());
+        System.out.println("Username: " + user.getUserName());
+        System.out.println("Nombre: " + user.getName());
+        System.out.println("Tipo de usuario: " + user.getUserType());
+        System.out.println("Usuario bloqueado: " + (user.isAccountBlocked() ? "si" : "no"));
+        System.out.println("+-----------------------------+");
+        scanner.nextLine();
+        scanner.nextLine();
     }
 
-    private void error(String string) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'error'");
+    public int updateMenu() {
+        System.out.println("-ACTUALIZAR DATOS DE USUARIO-");
+        System.out.println("Seleccione el apartado a actualizar: ");
+        System.out.println("1. Nombre del usuario.");
+        System.out.println("2. Contraseña. ");
+
+        return scanner.nextInt();
     }
 
-    private void editUser() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'editUser'");
+    public String updateUsername() {
+        scanner.nextLine();
+        System.out.println("Ingrese el nuevo username: ");
+        return scanner.nextLine();
     }
 
-    private void viewUserData() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'viewUserData'");
+    public String updatePassword() {
+        scanner.nextLine();
+        System.out.println("Ingrese la nueva contraseña");
+        return scanner.nextLine();
+    }
+
+    public void showMessage(String message) {
+        System.out.println(message);
+        scanner.nextLine();
     }
 
 }

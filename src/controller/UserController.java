@@ -46,7 +46,7 @@ public class UserController {
             if (user != null && user.canCreateUser) {
                 logout = false;
                 while (!logout) {
-                   int option = adminView.adminMenu();
+                    int option = adminView.adminMenu();
 
                     switch (option) {
                         case 1:
@@ -72,11 +72,33 @@ public class UserController {
                             break;
                         case 8:
                             logout = true;
-                            adminView.showMessage("Cerrando sesión");                
+                            adminView.showMessage("Cerrando sesión");
+                            break;
+                        default:
+                            adminView.showMessage("Opción no válida");
                     }
                 }
             } else if (user != null && !user.canCreateUser) {
-                standardView.standardMenu();
+                logout = false;
+
+                while (!logout) {
+                    int option = standardView.standardMenu();
+
+                    switch (option) {
+                        case 1:
+                            showSelfUserData();
+                            break;
+                        case 2:
+                            updateSelfUser();
+                            break;
+                        case 3:
+                            logout = true;
+                            standardView.showMessage("Cerrando sesión");
+                            break;
+                        default:
+                            standardView.showMessage("Opción no válida");
+                    }
+                }
             }
 
             if (user == null) {
@@ -90,7 +112,7 @@ public class UserController {
         int userId = adminView.requestUserId();
         User user = userService.findById(userId);
 
-        if(user == null){
+        if (user == null) {
             adminView.showMessage("Usuario no encontrado");
             return;
         }
@@ -100,7 +122,7 @@ public class UserController {
         while (!option) {
             int menuOption = adminView.updateMenu();
 
-            switch(menuOption){
+            switch (menuOption) {
                 case 1:
                     user.setName(adminView.updateUsername());
                     adminView.showMessage("Nombre actualizado con éxito!");
@@ -118,34 +140,29 @@ public class UserController {
 
         userService.update(user);
 
-
     }
 
-    public void changeUserRole(){
+    public void changeUserRole() {
         Integer id = adminView.requestUserId();
 
-
-
-        if(!userService.changeUserRole(id)){
+        if (!userService.changeUserRole(id)) {
             adminView.showMessage("Usuario no encontrado!");
-        }else{
+        } else {
             adminView.showMessage("Cambio de rol exitoso");
         }
 
-
     }
 
-    public void deleteUser(){
+    public void deleteUser() {
         Integer id = adminView.requestUserId();
 
-        if(userService.delete(id)){
+        if (userService.delete(id)) {
             adminView.showMessage("Usuario Eliminado exitosamente");
-        }else{
+        } else {
             adminView.showMessage("Usurio no encontrado");
         }
-        
-    }
 
+    }
 
     public void createUser() {
         userService.create(adminView.createUser());
@@ -164,12 +181,12 @@ public class UserController {
     }
 
     public void getUserLogs() {
-        
+
         Integer userId = adminView.requestUserId();
 
-        if(userService.findById(userId) != null){
+        if (userService.findById(userId) != null) {
             adminView.showUserLogs(userService.findById(userId));
-        }else{
+        } else {
             adminView.showMessage("Usuario no encontrado!");
         }
     }
@@ -178,10 +195,10 @@ public class UserController {
         return userService.currentUserData();
     }
 
-    public void lockUnlockUser(){
+    public void lockUnlockUser() {
         Integer userId = adminView.requestUserId();
 
-        switch(userService.lockUnlockUser(userId)){
+        switch (userService.lockUnlockUser(userId)) {
             case 1:
                 adminView.showMessage("Usuario Bloqueado");
                 break;
@@ -191,6 +208,37 @@ public class UserController {
             default:
                 adminView.showMessage("Usuario no encontrado");
                 break;
+        }
+    }
+
+    public void showSelfUserData() {
+        standardView.userData(userService.sesion.getCurrentUser());
+        userService.sesion.getCurrentUser().addUserLog(new UserLog("observó sus datos"));
+    }
+
+    public void updateSelfUser() {
+        boolean option = false;
+
+        while (!option) {
+            int menuOption = adminView.updateMenu();
+            User user = userService.sesion.getCurrentUser();
+
+            switch (menuOption) {
+                case 1:
+                    user.setName(standardView.updateUsername());
+                    user.addUserLog(new UserLog("actualizó su nombre"));
+                    standardView.showMessage("Nombre actualizado con éxito!");
+                    option = true;
+                    break;
+                case 2:
+                    user.setPassword(standardView.updatePassword());
+                    user.addUserLog(new UserLog("actualizó su contraseña"));
+                    standardView.showMessage("Contraseña actualizada con éxito!");
+                    option = true;
+                    break;
+                default:
+                    standardView.showMessage("Opción inválida");
+            }
         }
     }
 
