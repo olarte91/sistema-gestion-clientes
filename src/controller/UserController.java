@@ -56,7 +56,7 @@ public class UserController {
                             updateUser();
                             break;
                         case 3:
-                            delteUser();
+                            deleteUser();
                             break;
                         case 4:
                             changeUserRole();
@@ -135,7 +135,7 @@ public class UserController {
 
     }
 
-    public void delteUser(){
+    public void deleteUser(){
         Integer id = adminView.requestUserId();
 
         if(userService.delete(id)){

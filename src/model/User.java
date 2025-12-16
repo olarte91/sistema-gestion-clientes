@@ -29,7 +29,6 @@ public class User {
             canDeleteUser();
             this.userType = type;
         }else{
-            canEditUser();
             this.userType = type;
         }
        

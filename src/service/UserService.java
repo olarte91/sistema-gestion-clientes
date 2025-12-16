@@ -5,6 +5,7 @@ import model.UserLog;
 import model.UserOperations;
 import model.UserRegister;
 import util.SessionManager;
+import util.UserType;
 
 public class UserService implements UserOperations {
 
@@ -90,7 +91,26 @@ public class UserService implements UserOperations {
 
     @Override
     public boolean changeUserRole(Integer userId) {
-        return userRegister.changeUserRole(userId);
+        User user = userRegister.findById(userId);
+
+        if(user != null){
+            if(user.getUserType().equals(UserType.ADMIN)){
+                user.setUserType(UserType.STANDARD);
+                user.canCreateUser();
+                user.canEditUser();
+                user.canDeleteUser();
+                userRegister.changeUserRole(user);
+                return true;
+            }else{
+                user.setUserType(UserType.ADMIN);
+                user.canCreateUser();
+                user.canEditUser();
+                user.canDeleteUser();
+                userRegister.changeUserRole(user);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

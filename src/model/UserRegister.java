@@ -1,7 +1,5 @@
 package model;
 
-import util.UserType;
-
 public class UserRegister {
 
     private User[] users = new User[50];
@@ -65,25 +63,8 @@ public class UserRegister {
         return false;
     }
 
-    public boolean changeUserRole(Integer id){
-        User changeUserRole = findById(id);
-
-        if(changeUserRole != null){
-            if(changeUserRole.getUserType().equals(UserType.ADMIN)){
-                changeUserRole.setUserType(UserType.STANDARD);
-                changeUserRole.canCreateUser();
-                changeUserRole.canEditUser();
-                changeUserRole.canDeleteUser();
-                return true;
-            }else{
-                changeUserRole.setUserType(UserType.ADMIN);
-                changeUserRole.canCreateUser();
-                changeUserRole.canEditUser();
-                changeUserRole.canDeleteUser();
-                return true;
-            }
-        }
-        return false;
+    public void changeUserRole(User user){
+        users[userPosition] = user;
     }
 
 
