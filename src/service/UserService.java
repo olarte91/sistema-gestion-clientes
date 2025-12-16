@@ -38,7 +38,9 @@ public class UserService implements UserOperations {
 
     @Override
     public boolean delete(Integer userId) {
-        return userRegister.delete(userId);
+        User user = userRegister.findById(userId);
+
+        return userRegister.delete(user);
     }
 
     @Override

@@ -45,10 +45,9 @@ public class UserRegister {
         return users[userPosition];
     }   
 
-    public boolean delete(Integer id) {
-        User deleteUser = findById(id);
+    public boolean delete(User user) {
 
-        if (deleteUser != null) {
+        if (user != null) {
             for (int i = userPosition; i < slotCount - 1; i++) {
                 users[i] = users[i + 1];
             }
