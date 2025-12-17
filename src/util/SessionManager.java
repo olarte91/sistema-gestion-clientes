@@ -1,6 +1,7 @@
 package util;
 
 import model.User;
+import model.UserLog;
 
 public class SessionManager {
 

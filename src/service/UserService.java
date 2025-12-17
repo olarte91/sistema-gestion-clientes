@@ -34,17 +34,19 @@ public class UserService implements UserOperations {
     @Override
     public void update(User user) {
         userRegister.update(user);
+        sesion.getCurrentUser().addUserLog(new UserLog("ha actualizado los datos del usuario " + user.getUserName()));
     }
 
     @Override
     public boolean delete(Integer userId) {
         User user = userRegister.findById(userId);
-
+        sesion.getCurrentUser().addUserLog(new UserLog("ha eliminado al usuario " + user.getUserName()));
         return userRegister.delete(user);
     }
 
     @Override
     public User[] getUsers() {
+        sesion.getCurrentUser().addUserLog(new UserLog("ha observado la lista de usuarios"));
         return userRegister.getAllUsers();
     }
 
@@ -67,6 +69,7 @@ public class UserService implements UserOperations {
                 } else {
                     errorAttemp = 0;
                     sesion.loginUser(userLogin);
+                    sesion.getCurrentUser().addUserLog(new UserLog("ha iniciado sesión"));
                     return sesion.getCurrentUser();
                 }
             }
@@ -75,6 +78,7 @@ public class UserService implements UserOperations {
     }
 
     public void logoutUser() {
+        sesion.getCurrentUser().addUserLog(new UserLog("ha cerrado sesión"));
         sesion.logoutUser();
     }
 
@@ -83,6 +87,7 @@ public class UserService implements UserOperations {
     }
 
     public String currentUserData() {
+        sesion.getCurrentUser().addUserLog(new UserLog("ha visto su información"));
         return "Name: " + sesion.getCurrentUser().getName() + "\n" + "UserName: "
                 + sesion.getCurrentUser().getUserName();
     }
@@ -102,6 +107,8 @@ public class UserService implements UserOperations {
                 user.canEditUser();
                 user.canDeleteUser();
                 userRegister.changeUserRole(user);
+                sesion.getCurrentUser().addUserLog(new UserLog("ha cambiado el rol del usuario " +
+                    user.getUserName() + " a " + UserType.STANDARD.toString()));
                 return true;
             }else{
                 user.setUserType(UserType.ADMIN);
@@ -109,6 +116,8 @@ public class UserService implements UserOperations {
                 user.canEditUser();
                 user.canDeleteUser();
                 userRegister.changeUserRole(user);
+                sesion.getCurrentUser().addUserLog(new UserLog("ha cambiado el rol de usuario " +
+                        user.getUserName() + " a " + UserType.ADMIN.toString()));
                 return true;
             }
         }
@@ -123,9 +132,11 @@ public class UserService implements UserOperations {
         if(user != null){
             if(!user.isAccountBlocked()){
                 user.blockAccount();
+                sesion.getCurrentUser().addUserLog(new UserLog("ha desbloqueado el usuario " + user.getUserName()));
                 return 1;
             }else{
                 user.blockAccount();
+                sesion.getCurrentUser().addUserLog(new UserLog("ha bloqueado el usuario " + user.getUserName()));
                 return 2;
             }
         }

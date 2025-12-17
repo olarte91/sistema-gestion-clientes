@@ -72,6 +72,7 @@ public class UserController {
                             break;
                         case 8:
                             logout = true;
+                            logoutUser();
                             adminView.showMessage("Cerrando sesión");
                             break;
                         default:
@@ -93,6 +94,7 @@ public class UserController {
                             break;
                         case 3:
                             logout = true;
+                            userService.logoutUser();
                             standardView.showMessage("Cerrando sesión");
                             break;
                         default:
@@ -213,7 +215,6 @@ public class UserController {
 
     public void showSelfUserData() {
         standardView.userData(userService.sesion.getCurrentUser());
-        userService.sesion.getCurrentUser().addUserLog(new UserLog("observó sus datos"));
     }
 
     public void updateSelfUser() {
